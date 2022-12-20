@@ -8,7 +8,7 @@ public class BattleScene : MonoBehaviour
     void Start()
     {
 
-        var monster = BattleManager.GetInstance().GetRandomMonster();
+        MonsterBase monster = BattleManager.Instance.GetRandomMonster();
 
         GameObject go = ObjectManager.GetInstance().CreateMonster(monster.monsterName);
         go.transform.localScale = new Vector3(2.5f, 2.5f, 2.5f);
@@ -17,7 +17,7 @@ public class BattleScene : MonoBehaviour
         UIManager.GetInstance().SetEventSystem();
         UIManager.GetInstance().OpenUI("UIProfile");
 
-        BattleManager.GetInstance().BattleStart(monster);
+        BattleManager.Instance.BattleStart(monster);
     }
 
 }

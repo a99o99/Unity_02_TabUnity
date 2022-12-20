@@ -16,7 +16,7 @@ public class UITab : MonoBehaviour
     void OnTab()
     {
         Debug.Log("АјАн!!");
-        BattleManager.GetInstance().AttackMonster();
+        BattleManager.Instance.AttackMonster();
     }
 
 }

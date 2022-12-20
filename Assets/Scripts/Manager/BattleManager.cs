@@ -7,38 +7,43 @@ public class BattleManager : MonoBehaviour
     #region Singletone
     private static BattleManager instance = null;
 
-    public static BattleManager GetInstance()
+    public static BattleManager Instance
     {
-        if (instance == null)
+        get
         {
-            GameObject go = new GameObject("@BattleManager");
-            instance = go.AddComponent<BattleManager>();
+            if (instance == null)
+            {
+                GameObject go = new GameObject("@BattleManager");
+                instance = go.AddComponent<BattleManager>();
 
-            DontDestroyOnLoad(go);
+                DontDestroyOnLoad(go);
+            }
+
+            return instance;
         }
 
-        return instance;
     }
     #endregion
 
-    public Monster1[] monsterDatas = new Monster1[]
+    public MonsterBase[] monsterDatas = new MonsterBase[]
     {
         new Monster1("Monster1", 10, 30, 2.5f, 300),
-        new Monster1("Monster2", 15, 50, 2f, 1000),
+        new Monster2("Monster2", 15, 50, 2f, 1000),
+        new Monster3("Monster3", 6, 30, 2f, 500)
     };
 
-    public Monster1 GetRandomMonster()
+    public MonsterBase GetRandomMonster()
     {
         int rand = Random.Range(0, monsterDatas.Length);
 
         return monsterDatas[rand];
     }
 
-    public Monster1 monsterData;
+    public MonsterBase monsterData;
 
     GameObject uiTab;
     
-    public void BattleStart(Monster1 monster)
+    public void BattleStart(MonsterBase monster)
     {
         monsterData = monster;
 
@@ -56,6 +61,8 @@ public class BattleManager : MonoBehaviour
 
             int damage = monsterData.atk;
             GameManager.GetInstance().SetCurrentHP(-damage);
+
+            monsterData.Attack();
 
             GameObject ui = UIManager.GetInstance().GetUI("UIProfile");
             if(ui != null)
